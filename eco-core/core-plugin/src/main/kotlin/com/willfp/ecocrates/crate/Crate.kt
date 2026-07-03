@@ -81,6 +81,8 @@ class Crate(
 
     val isShiftRightClickOpenAllEnabled = config.getBool("placed.shift-right-click-open-all")
 
+    val isOpenAllEffectsPerKey = config.getBool("placed.open-all-effects-per-key")
+
     val particles = config.getSubsections("placed.particles").map {
         ParticleData(
             Particles.lookup(it.getString("particle")),
@@ -341,13 +343,7 @@ class Crate(
         val loc = location ?: player.eyeLocation
         val amount = method.getBulkAmount(this, player)
 
-        repeat(amount) {
-            val openEvent = CrateOpenEvent(player, this, method, getRandomReward(player), false)
-            Bukkit.getPluginManager().callEvent(openEvent)
-
-            method.useMethod(this, player)
-            player.profile.write(opensKey, getOpens(player) + 1)
-
+        fun triggerOpenEffects() {
             openEffects?.trigger(
                 TriggerData(player = player, location = loc)
                     .dispatch(player.toDispatcher())
@@ -360,10 +356,9 @@ class Crate(
                         )
                     }
             )
+        }
 
-            val rewardEvent = CrateRewardEvent(player, this, openEvent.reward)
-            Bukkit.getPluginManager().callEvent(rewardEvent)
-
+        fun triggerFinishEffects(rewardEvent: CrateRewardEvent) {
             finishEffects?.trigger(
                 TriggerData(player = player, location = loc)
                     .dispatch(player.toDispatcher())
@@ -378,8 +373,39 @@ class Crate(
                         )
                     }
             )
+        }
+
+        if (!isOpenAllEffectsPerKey) {
+            triggerOpenEffects()
+        }
+
+        var lastRewardEvent: CrateRewardEvent? = null
+
+        repeat(amount) {
+            val openEvent = CrateOpenEvent(player, this, method, getRandomReward(player), false)
+            Bukkit.getPluginManager().callEvent(openEvent)
+
+            method.useMethod(this, player)
+            player.profile.write(opensKey, getOpens(player) + 1)
+
+            if (isOpenAllEffectsPerKey) {
+                triggerOpenEffects()
+            }
+
+            val rewardEvent = CrateRewardEvent(player, this, openEvent.reward)
+            Bukkit.getPluginManager().callEvent(rewardEvent)
+
+            if (isOpenAllEffectsPerKey) {
+                triggerFinishEffects(rewardEvent)
+            } else {
+                lastRewardEvent = rewardEvent
+            }
 
             rewardEvent.reward.giveTo(player, this)
+        }
+
+        if (!isOpenAllEffectsPerKey) {
+            lastRewardEvent?.let { triggerFinishEffects(it) }
         }
     }
 

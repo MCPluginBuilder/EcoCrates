@@ -69,6 +69,7 @@ pay-to-open:
 
 placed:
   shift-right-click-open-all: true # Shift right-click to instantly open the whole stack of physical keys held, skipping the roll animation
+  open-all-effects-per-key: false # If true, open-effects/finish-effects trigger for every key in the stack. If false (default), they trigger once for the whole batch.
   random-reward:
     enabled: true
     height: 1.5
