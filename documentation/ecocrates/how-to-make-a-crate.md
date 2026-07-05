@@ -20,7 +20,7 @@ Crates are the core of EcoCrates: each one ties together a **key**, a **preview 
 
 ## Naming and IDs
 
-The file name without `.yml` is the crate's ID. This is what you use in commands, key configs, and effects. The first time you reference an item (for a reward display, mask, or arrow) it uses the [Item Lookup System](https://plugins.auxilor.io/the-item-lookup-system) format.
+The file name without `.yml` is the crate's ID. This is what you use in commands, key configs, and effects. The first time you reference an item (for a reward display, mask, or arrow) it uses the [Item Lookup System](https://hub.auxilor.io/wiki/eco/the-item-lookup-system-the-item-lookup-system) format.
 
 :::warning ID rules
 IDs may only contain lowercase letters, numbers, and underscores (a-z, 0-9, _). No spaces, capitals, or hyphens, or the crate will not load.
@@ -169,7 +169,7 @@ preview:
 ```
 
 :::tip
-Add custom buttons to the preview with custom GUI slots; see [Custom GUI Slots](https://plugins.auxilor.io/all-plugins/custom-gui-slots).
+Add custom buttons to the preview with custom GUI slots; see [Custom GUI Slots](https://hub.auxilor.io/wiki/eco/pages).
 :::
 
 ### Pay to open
@@ -230,8 +230,8 @@ finish-effects:
 :::danger Effects are their own system
 Effects, conditions, and filters are a shared system documented outside this plugin. To configure them:
 
-- [Configuring an Effect](https://plugins.auxilor.io/effects/configuring-an-effect)
-- [Configuring an Effect Chain](https://plugins.auxilor.io/effects/configuring-a-chain)
+- [Configuring an Effect](https://hub.auxilor.io/wiki/libreforge/configuring-an-effect)
+- [Configuring an Effect Chain](https://hub.auxilor.io/wiki/libreforge/configuring-a-chain)
 :::
 
 ### Rewards

@@ -20,7 +20,7 @@ Keys control access to crates. A key defines the **physical item** players hold,
 
 ## Naming and IDs
 
-The file name without `.yml` is the key's ID. This is what crates reference with their `key` option. The `item` and recipe ingredients use the [Item Lookup System](https://plugins.auxilor.io/the-item-lookup-system) format, so you can use vanilla items, custom items, and modifiers.
+The file name without `.yml` is the key's ID. This is what crates reference with their `key` option. The `item` and recipe ingredients use the [Item Lookup System](https://hub.auxilor.io/wiki/eco/the-item-lookup-system-the-item-lookup-system) format, so you can use vanilla items, custom items, and modifiers.
 
 :::warning ID rules
 IDs may only contain lowercase letters, numbers, and underscores (a-z, 0-9, _). No spaces, capitals, or hyphens, or the key will not load.
@@ -113,7 +113,7 @@ recipe: # The 3x3 recipe ingredients, use "" for empty slots
 ```
 
 :::tip
-Recipes support both shaped and shapeless layouts; set `shapeless: true` when slot positions don't matter. See [Recipes](https://plugins.auxilor.io/the-item-lookup-system/recipes).
+Recipes support both shaped and shapeless layouts; set `shapeless: true` when slot positions don't matter. See [Recipes](https://hub.auxilor.io/wiki/eco/the-item-lookup-system-the-item-lookup-system/recipes).
 :::
 
 ### Keys GUI

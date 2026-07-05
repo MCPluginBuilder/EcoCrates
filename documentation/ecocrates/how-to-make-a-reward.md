@@ -20,7 +20,7 @@ Rewards are what players win from crates. A reward defines the **effects** that 
 
 ## Naming and IDs
 
-The file name without `.yml` is the reward's ID. This is what you list in crate configs and preview layouts. The `display` item and any `give_item` effect use the [Item Lookup System](https://plugins.auxilor.io/the-item-lookup-system) format.
+The file name without `.yml` is the reward's ID. This is what you list in crate configs and preview layouts. The `display` item and any `give_item` effect use the [Item Lookup System](https://hub.auxilor.io/wiki/eco/the-item-lookup-system-the-item-lookup-system) format.
 
 :::warning ID rules
 IDs may only contain lowercase letters, numbers, and underscores (a-z, 0-9, _). No spaces, capitals, or hyphens, or the reward will not load.
@@ -79,8 +79,8 @@ win-effects: # The effects to run when the reward is won
 :::danger Effects are their own system
 Effects, conditions, and filters are a shared system documented outside this plugin. To configure them:
 
-- [Configuring an Effect](https://plugins.auxilor.io/effects/configuring-an-effect)
-- [Configuring an Effect Chain](https://plugins.auxilor.io/effects/configuring-a-chain)
+- [Configuring an Effect](https://hub.auxilor.io/wiki/libreforge/configuring-an-effect)
+- [Configuring an Effect Chain](https://hub.auxilor.io/wiki/libreforge/configuring-a-chain)
 :::
 
 ### Weight

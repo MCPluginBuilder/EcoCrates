@@ -21,7 +21,7 @@
     </a>
 </p>
 
-[![Docs](https://i.imgur.com/TQIBrNy.png)](https://plugins.auxilor.io/ecocrates)
+[![Docs](https://i.imgur.com/TQIBrNy.png)](https://hub.auxilor.io/ecocrates/ecocrates)
 
 ## License
 *Click here to read [the entire license](https://github.com/Auxilor/EcoCrates/blob/master/LICENSE.md).*

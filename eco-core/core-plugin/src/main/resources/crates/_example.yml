@@ -5,7 +5,7 @@
 # _example.yml is not loaded.
 
 name: "Demo Crate" # The display name of the crate
-roll: csgo # The opening style, check here: https://plugins.auxilor.io/ecocrates/animationsandrolls
+roll: csgo # The opening style, check here: https://hub.auxilor.io/ecocrates/ecocrates/animationsandrolls
 can-reroll: true # If once you win a reward, you can choose to reroll
 
 key: demo_key # The ID of the key for this crate (configure in /keys/demo_key.yml)
@@ -13,7 +13,7 @@ key: demo_key # The ID of the key for this crate (configure in /keys/demo_key.ym
 preview: # The preview GUI, when left-clicking a crate or using /crates preview
   title: "Demo Crate (%page%/%max_page%)" # The title of the preview GUI. Supports %page% and %max_page% placeholders.
   rows: 6 # The amount of rows for the gui, between 1 and 6
-  # Custom GUI slots shared across all preview pages; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
+  # Custom GUI slots shared across all preview pages; see here for a how-to: https://hub.auxilor.io/wiki/eco/pages#custom-gui-slots
   custom-slots: [ ]
   page-change-sound: # The sound played when changing pages. Remove or set enabled to false to disable.
     enabled: true
@@ -43,7 +43,7 @@ preview: # The preview GUI, when left-clicking a crate or using /crates preview
           - "211110112"
           - "211111112"
           - "222222222"
-      # Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
+      # Custom GUI slots; see here for a how-to: https://hub.auxilor.io/wiki/eco/pages#custom-gui-slots
       custom-slots: [ ]
       rewards: # Where to put rewards in the GUI
         - id: diamond_sword # The reward ID
@@ -64,7 +64,7 @@ preview: # The preview GUI, when left-clicking a crate or using /crates preview
           - "211011112"
           - "211111112"
           - "222222222"
-      # Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
+      # Custom GUI slots; see here for a how-to: https://hub.auxilor.io/wiki/eco/pages#custom-gui-slots
       custom-slots: [ ]
       rewards: # Where to put rewards in the GUI
         - id: bedrock

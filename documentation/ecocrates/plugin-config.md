@@ -89,7 +89,7 @@ keygui:
     row: 2
     column: 1
 
-  custom-slots: [] # Custom GUI slots; see https://plugins.auxilor.io/all-plugins/custom-gui-slots
+  custom-slots: [] # Custom GUI slots; see https://hub.auxilor.io/wiki/eco/pages
 
 # Particle animations used by placed crates; referenced by name in a crate's placed.particles.
 animations:
