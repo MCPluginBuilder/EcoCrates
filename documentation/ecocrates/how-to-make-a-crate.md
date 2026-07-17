@@ -87,6 +87,8 @@ pay-to-open:
 
 # === Placed: holograms and particles for physically placed crates ===
 placed:
+  shift-right-click-open-all: true # Shift right-click instantly opens the whole stack of physical keys held, skipping the roll animation
+  open-all-effects-per-key: false # If true, open/finish effects fire for every key in the stack. If false (default), they fire once for the whole batch.
   random-reward: # A floating item showing a possible reward
     enabled: true
     height: 1.5 # Height above the crate
@@ -189,6 +191,8 @@ Holograms and particles shown on a crate that has been physically placed in the 
 
 ```yaml
 placed:
+  shift-right-click-open-all: true # Shift right-click instantly opens the whole stack of physical keys held, skipping the roll animation
+  open-all-effects-per-key: false # If true, open/finish effects fire for every key in the stack. If false (default), they fire once for the whole batch.
   random-reward: # A floating item showing a possible reward
     enabled: true
     height: 1.5 # Height above the crate

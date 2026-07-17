@@ -79,6 +79,10 @@ class Crate(
 
     val randomRewardName = config.getFormattedString("placed.random-reward.name")
 
+    val isShiftRightClickOpenAllEnabled = config.getBool("placed.shift-right-click-open-all")
+
+    val isOpenAllEffectsPerKey = config.getBool("placed.open-all-effects-per-key")
+
     val particles = config.getSubsections("placed.particles").map {
         ParticleData(
             Particles.lookup(it.getString("particle")),
@@ -277,21 +281,35 @@ class Crate(
     }
 
     fun openPlaced(player: Player, location: Location, method: OpenMethod) {
-        val nicerLocation = location.clone().add(0.5, 1.5, 0.5)
+        val nicerLocation = location.block.location.add(0.5, 1.5, 0.5)
 
         if (!canOpenAndNotify(player, method)) {
-            val vector = player.location.clone().subtract(nicerLocation.toVector())
-                .toVector()
-                .normalize()
-                .add(Vector(0.0, 1.0, 0.0))
-                .multiply(plugin.configYml.getDouble("no-key-velocity"))
-
-            player.velocity = vector
-
+            pushAwayFromCrate(player, nicerLocation)
             return
         }
 
         openWithMethod(player, method, nicerLocation)
+    }
+
+    fun openPlacedAll(player: Player, location: Location, method: OpenMethod) {
+        val nicerLocation = location.block.location.add(0.5, 1.5, 0.5)
+
+        if (!canOpenAndNotify(player, method)) {
+            pushAwayFromCrate(player, nicerLocation)
+            return
+        }
+
+        openAllWithMethod(player, method, nicerLocation)
+    }
+
+    private fun pushAwayFromCrate(player: Player, nicerLocation: Location) {
+        val vector = player.location.clone().subtract(nicerLocation.toVector())
+            .toVector()
+            .normalize()
+            .add(Vector(0.0, 1.0, 0.0))
+            .multiply(plugin.configYml.getDouble("no-key-velocity"))
+
+        player.velocity = vector
     }
 
     fun openWithMethod(player: Player, method: OpenMethod, location: Location? = null) {
@@ -306,6 +324,88 @@ class Crate(
 
         if (open(player, method, location = location)) {
             method.useMethod(this, player)
+        }
+    }
+
+    fun openAllWithMethod(player: Player, method: OpenMethod, location: Location? = null) {
+        if (!canOpenAndNotify(player, method)) {
+            return
+        }
+
+        if (!hasPermissionAndNotify(player)) {
+            return
+        }
+
+        if (hasRanOutOfRewardsAndNotify(player)) {
+            return
+        }
+
+        val loc = location ?: player.eyeLocation
+        val amount = method.getBulkAmount(this, player)
+
+        fun triggerOpenEffects() {
+            openEffects?.trigger(
+                TriggerData(player = player, location = loc)
+                    .dispatch(player.toDispatcher())
+                    .apply {
+                        addPlaceholders(
+                            listOf(
+                                NamedValue("crate", name),
+                                NamedValue("crate_id", id)
+                            )
+                        )
+                    }
+            )
+        }
+
+        fun triggerFinishEffects(rewardEvent: CrateRewardEvent) {
+            finishEffects?.trigger(
+                TriggerData(player = player, location = loc)
+                    .dispatch(player.toDispatcher())
+                    .apply {
+                        addPlaceholders(
+                            listOf(
+                                NamedValue("crate", name),
+                                NamedValue("crate_id", id),
+                                NamedValue("reward", rewardEvent.reward.name),
+                                NamedValue("reward_id", rewardEvent.reward.id)
+                            )
+                        )
+                    }
+            )
+        }
+
+        if (!isOpenAllEffectsPerKey) {
+            triggerOpenEffects()
+        }
+
+        var lastRewardEvent: CrateRewardEvent? = null
+
+        repeat(amount) {
+            val openEvent = CrateOpenEvent(player, this, method, getRandomReward(player), false)
+            Bukkit.getPluginManager().callEvent(openEvent)
+
+            method.useMethod(this, player)
+            player.profile.write(opensKey, getOpens(player) + 1)
+
+            if (isOpenAllEffectsPerKey) {
+                triggerOpenEffects()
+            }
+
+            val rewardEvent = CrateRewardEvent(player, this, openEvent.reward)
+            Bukkit.getPluginManager().callEvent(rewardEvent)
+
+            if (isOpenAllEffectsPerKey) {
+                triggerFinishEffects(rewardEvent)
+            } else {
+                lastRewardEvent = rewardEvent
+            }
+
+            rewardEvent.reward.giveTo(player, this)
+        }
+
+        if (!isOpenAllEffectsPerKey) {
+            lastRewardEvent?.let { triggerFinishEffects(it) }
         }
     }
 
